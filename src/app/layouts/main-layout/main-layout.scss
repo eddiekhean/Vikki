@@ -1,0 +1,39 @@
+:host {
+  display: block;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--p-surface-50);
+}
+
+.layout-wrapper {
+  display: flex;
+  height: 100%;
+}
+
+.sidebar-container {
+  width: 0;
+  min-width: 0;
+  overflow: hidden;
+  transition:
+    width 0.25s ease,
+    min-width 0.25s ease;
+
+  &.open {
+    width: 260px;
+    min-width: 260px;
+  }
+}
+
+.layout-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.main-content {
+  flex: 1;
+  padding: 1.5rem;
+  overflow-y: auto;
+}

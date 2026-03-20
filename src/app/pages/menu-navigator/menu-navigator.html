@@ -1,0 +1,30 @@
+<div class="brand">
+  <i [class]="groupIcon()" class="brand-icon"></i>
+  {{ groupLabel() }}
+</div>
+
+<div class="search-wrapper">
+  <i class="pi pi-search"></i>
+  <input
+    type="text"
+    [(ngModel)]="searchQuery"
+    [placeholder]="'Tìm trong ' + groupLabel() + '...'"
+    (input)="onSearch()"
+    autocomplete="off"
+  />
+</div>
+
+<div class="menu-grid">
+  @for (item of filteredChildren(); track item.id) {
+    <div class="menu-item" (click)="onNavigate(item)">
+      <div class="menu-item-icon">
+        <i [class]="item.icon"></i>
+      </div>
+      <span class="menu-item-label" [title]="item.label">{{ item.label }}</span>
+    </div>
+  }
+</div>
+
+@if (filteredChildren().length === 0 && searchQuery) {
+  <p class="no-results">Không tìm thấy "{{ searchQuery }}"</p>
+}

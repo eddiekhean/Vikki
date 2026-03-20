@@ -1,0 +1,23 @@
+<div class="header-left">
+  @if (showMenuButton()) {
+    <p-button
+      icon="pi pi-bars"
+      [text]="true"
+      [rounded]="true"
+      severity="secondary"
+      (onClick)="toggleSidebar.emit()"
+    />
+  }
+</div>
+
+<div class="header-right">
+  <span class="user-name">{{ authService.displayName() }}</span>
+  <p-avatar
+    [label]="authService.displayName().charAt(0).toUpperCase()"
+    shape="circle"
+    size="normal"
+    (click)="userMenu.toggle($event)"
+    style="cursor: pointer"
+  />
+  <p-menu #userMenu [model]="menuItems" [popup]="true" />
+</div>

@@ -1,0 +1,12 @@
+<div class="layout-wrapper">
+  <div class="sidebar-container" [class.open]="sidebarService.isOpen()">
+    <app-sidebar [items]="menuItems()" (closeSidebar)="sidebarService.close()" />
+  </div>
+
+  <div class="layout-right">
+    <app-header (toggleSidebar)="sidebarService.toggle()" [showMenuButton]="true" />
+    <main class="main-content">
+      <router-outlet />
+    </main>
+  </div>
+</div>

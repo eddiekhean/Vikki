@@ -1,0 +1,67 @@
+<div class="sidebar-header">
+  <span class="sidebar-brand">EMS Portal</span>
+  <p-button
+    icon="pi pi-times"
+    [text]="true"
+    [rounded]="true"
+    severity="secondary"
+    size="small"
+    (onClick)="closeSidebar.emit()"
+  />
+</div>
+
+<nav class="sidebar-nav">
+  <!-- Home link (luôn trên cùng) -->
+  <a
+    class="nav-link"
+    routerLink="/"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
+    <i class="pi pi-th-large nav-icon"></i>
+    <span class="nav-label">Trang chủ</span>
+  </a>
+
+  <div class="nav-divider"></div>
+
+  <!-- Recursive menu -->
+  <ng-container *ngTemplateOutlet="menuList; context: { $implicit: items(), depth: 0 }" />
+
+  <ng-template #menuList let-menuItems let-depth="depth">
+    @for (item of menuItems; track item.id) {
+      @if (item.visible !== false) {
+        @if (item.children && item.children.length > 0) {
+          <!-- Parent: có children → expand/collapse -->
+          <button
+            class="nav-link"
+            [class.parent-active]="isParentActive(item)"
+            [style.padding-left.rem]="1 + depth * 0.75"
+            (click)="toggleExpand(item)"
+          >
+            <i [class]="item.icon" class="nav-icon"></i>
+            <span class="nav-label">{{ item.label }}</span>
+            <i class="pi pi-chevron-right chevron" [class.expanded]="item.expanded"></i>
+          </button>
+
+          <!-- Children list (animated) -->
+          <div class="sub-menu" [class.open]="item.expanded">
+            <ng-container
+              *ngTemplateOutlet="menuList; context: { $implicit: item.children, depth: depth + 1 }"
+            />
+          </div>
+        } @else {
+          <!-- Leaf: không có children → navigate -->
+          <a
+            class="nav-link"
+            [routerLink]="item.routerLink"
+            routerLinkActive="active"
+            [style.padding-left.rem]="1 + depth * 0.75"
+          >
+            <i [class]="item.icon" class="nav-icon"></i>
+            <span class="nav-label">{{ item.label }}</span>
+          </a>
+        }
+      }
+    }
+  </ng-template>
+</nav>
