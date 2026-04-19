@@ -1,0 +1,111 @@
+<div class="page-wrapper">
+  <div class="page-header">
+    <p-breadcrumb [model]="breadcrumbItems" [home]="homeItem" />
+    <h1 class="page-title">Quản lý Người dùng</h1>
+  </div>
+
+  <div class="table-card">
+    <div class="toolbar">
+      <p-iconfield>
+        <p-inputicon styleClass="pi pi-search" />
+        <input
+          pInputText
+          type="text"
+          placeholder="Tìm kiếm theo tên, email, vai trò..."
+          class="search-input"
+          (input)="onSearch($event)"
+        />
+      </p-iconfield>
+      <p-button label="Thêm người dùng" icon="pi pi-plus" />
+    </div>
+
+    @if (loading()) {
+      <div class="skeleton-table">
+        @for (row of skeletonRows; track $index) {
+          <div class="skeleton-row">
+            <p-skeleton shape="circle" size="2.5rem" />
+            <p-skeleton width="20%" height="1rem" />
+            <p-skeleton width="25%" height="1rem" />
+            <p-skeleton width="15%" height="1rem" />
+            <p-skeleton width="13%" height="1rem" />
+            <p-skeleton width="9rem" height="1.5rem" borderRadius="16px" />
+            <p-skeleton width="5rem" height="2rem" borderRadius="6px" />
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="table-container">
+        <p-table
+          [value]="filteredUsers()"
+          [paginator]="true"
+          [rows]="10"
+          [rowsPerPageOptions]="[5, 10, 25]"
+          styleClass="p-datatable-sm"
+          [tableStyle]="{ 'min-width': '58rem' }"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width: 4rem"></th>
+              <th pSortableColumn="fullName">
+                Họ và tên <p-sortIcon field="fullName" />
+              </th>
+              <th pSortableColumn="email">Email <p-sortIcon field="email" /></th>
+              <th>Điện thoại</th>
+              <th pSortableColumn="role">Vai trò <p-sortIcon field="role" /></th>
+              <th pSortableColumn="status">Trạng thái <p-sortIcon field="status" /></th>
+              <th style="width: 8rem; text-align: center">Thao tác</th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-user>
+            <tr class="user-row">
+              <td>
+                @if (user.avatar) {
+                  <p-avatar [image]="user.avatar" shape="circle" size="normal" />
+                } @else {
+                  <p-avatar
+                    [label]="getInitials(user.fullName)"
+                    shape="circle"
+                    size="normal"
+                    class="avatar-placeholder"
+                  />
+                }
+              </td>
+              <td class="name-cell">{{ user.fullName }}</td>
+              <td class="muted-cell">{{ user.email }}</td>
+              <td class="muted-cell">{{ user.phone }}</td>
+              <td>
+                <span class="role-badge">{{ user.role }}</span>
+              </td>
+              <td>
+                <p-tag
+                  [value]="getStatusLabel(user.status)"
+                  [severity]="getStatusSeverity(user.status)"
+                />
+              </td>
+              <td style="text-align: center">
+                <p-button
+                  label="Chi tiết"
+                  icon="pi pi-eye"
+                  size="small"
+                  [text]="true"
+                  severity="info"
+                  (onClick)="navigateToDetail(user)"
+                />
+              </td>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="7" class="empty-message">
+                <i class="pi pi-inbox"></i>
+                <span>Không tìm thấy người dùng nào</span>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    }
+  </div>
+</div>

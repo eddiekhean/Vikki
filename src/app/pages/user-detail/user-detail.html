@@ -1,0 +1,167 @@
+<div class="page-wrapper">
+  <!-- Header: breadcrumb + back button -->
+  <div class="page-header">
+    <p-breadcrumb [model]="breadcrumbItems" [home]="homeItem" />
+    <p-button
+      label="Quay lại"
+      icon="pi pi-arrow-left"
+      [text]="true"
+      severity="secondary"
+      (onClick)="goBack()"
+    />
+  </div>
+
+  <!-- Loading state -->
+  @if (loading()) {
+    <div class="skeleton-profile-card">
+      <p-skeleton shape="circle" size="6rem" />
+      <div class="skeleton-profile-info">
+        <p-skeleton width="16rem" height="1.75rem" />
+        <p-skeleton width="12rem" height="1rem" />
+        <p-skeleton width="8rem" height="1.5rem" borderRadius="16px" />
+      </div>
+    </div>
+
+    <div class="info-grid">
+      @for (card of [1, 2]; track card) {
+        <div class="info-card">
+          <p-skeleton width="10rem" height="1rem" />
+          <p-divider />
+          @for (field of skeletonFields; track $index) {
+            <div class="skeleton-field">
+              <p-skeleton width="5rem" height="0.7rem" />
+              <p-skeleton width="14rem" height="1rem" />
+            </div>
+          }
+        </div>
+      }
+    </div>
+  }
+
+  <!-- Error state -->
+  @else if (error()) {
+    <div class="error-wrapper">
+      <p-message severity="error" [text]="error() ?? ''" />
+      <p-button
+        label="Quay lại danh sách"
+        icon="pi pi-arrow-left"
+        (onClick)="goBack()"
+      />
+    </div>
+  }
+
+  <!-- Data state -->
+  @else if (user(); as u) {
+    <!-- Profile hero card -->
+    <div class="profile-card">
+      @if (u.avatar) {
+        <p-avatar [image]="u.avatar" shape="circle" size="xlarge" class="profile-avatar" />
+      } @else {
+        <p-avatar
+          [label]="getInitials(u.fullName)"
+          shape="circle"
+          size="xlarge"
+          class="profile-avatar avatar-initials"
+        />
+      }
+
+      <div class="profile-info">
+        <h2 class="profile-name">{{ u.fullName }}</h2>
+        <p class="profile-email">
+          <i class="pi pi-envelope"></i>
+          {{ u.email }}
+        </p>
+        <div class="profile-badges">
+          <span class="role-badge">
+            <i class="pi pi-id-card"></i>
+            {{ u.role }}
+          </span>
+          <p-tag
+            [value]="getStatusLabel(u.status)"
+            [severity]="getStatusSeverity(u.status)"
+          />
+        </div>
+      </div>
+
+      <div class="profile-actions">
+        <p-button label="Chỉnh sửa" icon="pi pi-pencil" severity="secondary" [outlined]="true" />
+      </div>
+    </div>
+
+    <!-- Detail info grid -->
+    <div class="info-grid">
+      <!-- Personal info -->
+      <div class="info-card">
+        <div class="info-card-header">
+          <i class="pi pi-user"></i>
+          <span>Thông tin cá nhân</span>
+        </div>
+        <p-divider />
+        <div class="info-list">
+          <div class="info-item">
+            <span class="info-label">Họ và tên</span>
+            <span class="info-value">{{ u.fullName }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Email</span>
+            <span class="info-value">
+              <i class="pi pi-envelope field-icon"></i>
+              {{ u.email }}
+            </span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Số điện thoại</span>
+            <span class="info-value">
+              <i class="pi pi-phone field-icon"></i>
+              {{ u.phone }}
+            </span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Địa chỉ</span>
+            <span class="info-value">
+              <i class="pi pi-map-marker field-icon"></i>
+              {{ u.address }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Account info -->
+      <div class="info-card">
+        <div class="info-card-header">
+          <i class="pi pi-shield"></i>
+          <span>Thông tin tài khoản</span>
+        </div>
+        <p-divider />
+        <div class="info-list">
+          <div class="info-item">
+            <span class="info-label">Vai trò</span>
+            <span class="info-value">
+              <span class="role-badge">{{ u.role }}</span>
+            </span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Trạng thái</span>
+            <span class="info-value">
+              <p-tag
+                [value]="getStatusLabel(u.status)"
+                [severity]="getStatusSeverity(u.status)"
+              />
+            </span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Mã người dùng</span>
+            <span class="info-value user-id">#{{ u.id }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Ngày tạo</span>
+            <span class="info-value">
+              <i class="pi pi-calendar field-icon"></i>
+              {{ formatDate(u.createdDate) }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

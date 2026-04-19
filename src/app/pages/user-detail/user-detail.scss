@@ -1,0 +1,217 @@
+:host {
+  display: block;
+  padding: 1.5rem;
+}
+
+// ─── Page Header ───────────────────────────────────────
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+// ─── Profile Hero Card ─────────────────────────────────
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: var(--p-surface-0);
+  border: 1px solid var(--p-surface-200);
+  border-radius: 12px;
+  padding: 1.75rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.profile-avatar {
+  flex-shrink: 0;
+  width: 6rem !important;
+  height: 6rem !important;
+  font-size: 1.75rem !important;
+}
+
+.avatar-initials {
+  background: var(--p-primary-color) !important;
+  color: #fff !important;
+}
+
+.profile-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.profile-name {
+  margin: 0 0 0.3rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--p-text-color);
+}
+
+.profile-email {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 0 0.75rem;
+  color: var(--p-text-muted-color);
+  font-size: 0.95rem;
+
+  i {
+    font-size: 0.85rem;
+  }
+}
+
+.profile-badges {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.profile-actions {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+// ─── Info Grid ─────────────────────────────────────────
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: 1.25rem;
+}
+
+.info-card {
+  background: var(--p-surface-0);
+  border: 1px solid var(--p-surface-200);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+}
+
+.info-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--p-text-color);
+
+  i {
+    color: var(--p-primary-color);
+    font-size: 1.05rem;
+  }
+}
+
+.info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-top: 0.25rem;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.info-label {
+  font-size: 0.72rem;
+  color: var(--p-text-muted-color);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+}
+
+.info-value {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.95rem;
+  color: var(--p-text-color);
+}
+
+.field-icon {
+  color: var(--p-text-muted-color);
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.65rem;
+  background: var(--p-surface-100);
+  color: var(--p-text-color);
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid var(--p-surface-300);
+  white-space: nowrap;
+}
+
+.user-id {
+  font-family: monospace;
+  font-size: 0.9rem;
+  color: var(--p-text-muted-color);
+}
+
+// ─── Loading Skeleton ──────────────────────────────────
+.skeleton-profile-card {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: var(--p-surface-0);
+  border: 1px solid var(--p-surface-200);
+  border-radius: 12px;
+  padding: 1.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.skeleton-profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.skeleton-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-top: 0.6rem;
+}
+
+// ─── Error State ───────────────────────────────────────
+.error-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+// ─── Responsive ────────────────────────────────────────
+@media (max-width: 640px) {
+  :host {
+    padding: 1rem;
+  }
+
+  .profile-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .profile-actions {
+    margin-left: 0;
+    width: 100%;
+
+    p-button {
+      width: 100%;
+    }
+  }
+
+  .toolbar .search-input {
+    width: 100%;
+  }
+}

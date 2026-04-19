@@ -38,7 +38,16 @@ export const routes: Routes = [
 
       // Quản lý hệ thống (phân cấp)
       { path: 'quan-ly-he-thong', loadComponent: menuNavigator, pathMatch: 'full' },
-      { path: 'quan-ly-he-thong/users', loadComponent: dynamicPage, data: { pageId: 'users' } },
+      {
+        path: 'quan-ly-he-thong/users',
+        loadComponent: () =>
+          import('./pages/user-management/user-management').then((m) => m.UserManagement),
+      },
+      {
+        path: 'quan-ly-he-thong/users/:id',
+        loadComponent: () =>
+          import('./pages/user-detail/user-detail').then((m) => m.UserDetail),
+      },
       { path: 'quan-ly-he-thong/roles', loadComponent: dynamicPage, data: { pageId: 'roles' } },
       {
         path: 'quan-ly-he-thong/departments',
